@@ -219,4 +219,40 @@ cyclistic_full_df %>%
   filter(quarter == "Q4") %>%
   summarise(mean(ride_length))
 
+#----FOR TABLEAU----
+
+#convert units of ride_length from seconds to minutes
+cyclistic_full_df$ride_length <- as.numeric(cyclistic_full_df$ride_length)
+cyclistic_full_df$ride_length <- cyclistic_full_df$ride_length / 60
+
+#changing the data type and values of column day_of_week
+cyclistic_full_df <- cyclistic_full_df %>% mutate(day_of_week =
+                                                    case_when(day_of_week == "1" ~ "Sunday",
+                                                              day_of_week == "2" ~ "Monday",
+                                                              day_of_week == "3" ~ "Tuesday",
+                                                              day_of_week == "4" ~ "Wednesday",
+                                                              day_of_week == "5" ~ "Thursday",
+                                                              day_of_week == "6" ~ "Friday",
+                                                              day_of_week == "7" ~ "Saturday")
+)
+
+#change the data type and values of column months
+cyclistic_full_df <- cyclistic_full_df %>% mutate(months =
+                                                    case_when(months == "01" ~ "January",
+                                                              months == "02" ~ "February",
+                                                              months == "03" ~ "March",
+                                                              months == "04" ~ "April",
+                                                              months == "05" ~ "May",
+                                                              months == "06" ~ "June",
+                                                              months == "07" ~ "July",
+                                                              months == "08" ~ "August",
+                                                              months == "09" ~ "September",
+                                                              months == "10" ~ "October",
+                                                              months == "11" ~ "November",
+                                                              months == "12" ~ "December")
+)
+
+#download the final dataset as a .csv file
+fwrite(cyclistic_full_df,"cyclistic_tableau.csv")
+
 #----END----
